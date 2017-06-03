@@ -25,7 +25,7 @@ navbar:
 #      - text: "Optimizely's API with R"
 #      - text: "Using Qualaroo's REST API With Python"
 #      - text: "Reading Files in a Zipped Folder With R"
-#      - text: "Spark & R"
+#      - text: "Spark and R"
 
   right:
     - icon: ion-social-github
