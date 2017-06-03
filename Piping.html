@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Piping</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Posts
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="logging.html">Logging Errors in R</a>
+    </li>
+    <li>
+      <a href="montyhall.html">Monty Hall Simulation</a>
+    </li>
+    <li>
+      <a href="piping.html">Piping Code</a>
+    </li>
+    <li>
+      <a href="Reading.html">Reading Files Conditionally</a>
+    </li>
+    <li>
+      <a href="dumbell.html">Dumbell Plots</a>
+    </li>
+    <li>
+      <a href="Microbenchmarking.html">Microbenchmarking Example</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/seanpwilliams">
+    <span class="ion ion-social-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/seanwilliams0">
+    <span class="ion ion-person"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Piping</h1>
+
+</div>
+
+
+<p>In the dplyr library, pipes allow you to write really clean code to munge data, compared to highly nested code, or code that requires repeated assignments to temporary dataframes. For teams familiar with piping, it’s an easy way to read someone’s code and figure out conceptually what they were doing, faster than untangling a nest of code.</p>
+<div id="grabbing-some-data" class="section level2">
+<h2>Grabbing Some Data</h2>
+<p>This is data from Seattle’s open API, retreived from this page: <a href="https://data.seattle.gov/Transportation/Traffic-Flow-Counts/7svg-ds5z" class="uri">https://data.seattle.gov/Transportation/Traffic-Flow-Counts/7svg-ds5z</a></p>
+<p>By the way, I think it’s super cool that Seattle is making an effort to share data, in spite of the fact that I’m using it as is a toy example to illustrate something else.</p>
+<pre class="r"><code>URL &lt;- &quot;https://data.seattle.gov/resource/rn6u-vkuv.json&quot;
+df &lt;- jsonlite::fromJSON(URL)
+kable(head(df, 10))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">aawdt</th>
+<th align="left">downtown</th>
+<th align="left">stname</th>
+<th align="left">year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">22200.0</td>
+<td align="left">FALSE</td>
+<td align="left">N 45TH ST</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="even">
+<td align="left">9500.0</td>
+<td align="left">FALSE</td>
+<td align="left">NE 80TH ST</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="odd">
+<td align="left">30200.0</td>
+<td align="left">TRUE</td>
+<td align="left">DENNY WAY</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="even">
+<td align="left">7600.0</td>
+<td align="left">FALSE</td>
+<td align="left">E ALOHA ST</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="odd">
+<td align="left">6300.0</td>
+<td align="left">FALSE</td>
+<td align="left">51ST AVE S</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="even">
+<td align="left">10300.0</td>
+<td align="left">FALSE</td>
+<td align="left">24TH AVE NW</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="odd">
+<td align="left">13100.0</td>
+<td align="left">FALSE</td>
+<td align="left">10TH AVE E</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="even">
+<td align="left">29500.0</td>
+<td align="left">FALSE</td>
+<td align="left">NE NORTHGATE WAY</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="odd">
+<td align="left">33400.0</td>
+<td align="left">TRUE</td>
+<td align="left">JAMES ST</td>
+<td align="left">2009.0</td>
+</tr>
+<tr class="even">
+<td align="left">8500.0</td>
+<td align="left">FALSE</td>
+<td align="left">NW 80TH ST</td>
+<td align="left">2009.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="comparing-code" class="section level2">
+<h2>Comparing Code</h2>
+<p>To compare the code, let’s manipulate to data to show which street had maximum AAWDT (average annual weekday traffic), for downtown/not downtown over each year in the dataset.</p>
+<div id="the-nested-version" class="section level3">
+<h3>The Nested Version</h3>
+<pre class="r"><code>df1 &lt;- arrange(
+  filter(
+    group_by(
+      mutate(df, year = as.integer(year))
+      , year, downtown)
+    , aawdt == max(aawdt))
+  , downtown, year)
+
+kable(df1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">aawdt</th>
+<th align="left">downtown</th>
+<th align="left">stname</th>
+<th align="right">year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">9900.0</td>
+<td align="left">FALSE</td>
+<td align="left">ELLIS AVE S</td>
+<td align="right">2007</td>
+</tr>
+<tr class="even">
+<td align="left">9900.0</td>
+<td align="left">FALSE</td>
+<td align="left">15TH AVE NE</td>
+<td align="right">2008</td>
+</tr>
+<tr class="odd">
+<td align="left">9800.0</td>
+<td align="left">FALSE</td>
+<td align="left">S GENESEE ST</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">9500.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2007</td>
+</tr>
+<tr class="odd">
+<td align="left">8700.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2008</td>
+</tr>
+<tr class="even">
+<td align="left">9800.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2009</td>
+</tr>
+</tbody>
+</table>
+<p>This code is concise and relatively straightforward, but given our natural inclination to read from the top left, it’s a bit of a pain to find the ‘core’ of the loop to figure out where you’re starting from, and what you’re trying to do with it.</p>
+</div>
+<div id="intermediate-assignment-version" class="section level3">
+<h3>Intermediate Assignment Version</h3>
+<pre class="r"><code>df2 &lt;- mutate(df, year = as.integer(year))
+df2 &lt;- group_by(df2, year, downtown)
+df2 &lt;- filter(df2, aawdt == max(aawdt)) 
+df2 &lt;- arrange(df2, downtown, year) 
+
+kable(df2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">aawdt</th>
+<th align="left">downtown</th>
+<th align="left">stname</th>
+<th align="right">year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">9900.0</td>
+<td align="left">FALSE</td>
+<td align="left">ELLIS AVE S</td>
+<td align="right">2007</td>
+</tr>
+<tr class="even">
+<td align="left">9900.0</td>
+<td align="left">FALSE</td>
+<td align="left">15TH AVE NE</td>
+<td align="right">2008</td>
+</tr>
+<tr class="odd">
+<td align="left">9800.0</td>
+<td align="left">FALSE</td>
+<td align="left">S GENESEE ST</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">9500.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2007</td>
+</tr>
+<tr class="odd">
+<td align="left">8700.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2008</td>
+</tr>
+<tr class="even">
+<td align="left">9800.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2009</td>
+</tr>
+</tbody>
+</table>
+<p>It’s pretty easy to read here, that we want to:</p>
+<ol style="list-style-type: decimal">
+<li>Convert year to the integer data type</li>
+<li>Group by year, and the downtown flag</li>
+<li>Filter the data to select the rows with the highest AAWDT, by group</li>
+<li>Sort/arrange the data</li>
+</ol>
+<p>While this version is much easier to read, it kind of violates the “DNY” or do not repeat yourself concept, in that we’re repeeatedly assigning the manipulated dataframe.</p>
+</div>
+<div id="piping-version" class="section level3">
+<h3>Piping Version</h3>
+<pre class="r"><code>df3 &lt;- df %&gt;% 
+  mutate(year = as.integer(year)) %&gt;% 
+  group_by(year, downtown) %&gt;% 
+  filter(aawdt == max(aawdt)) %&gt;% 
+  arrange(downtown, year) 
+# The shortcut for creating a pipe in Rstudio is cmd-shift-m
+kable(df3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">aawdt</th>
+<th align="left">downtown</th>
+<th align="left">stname</th>
+<th align="right">year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">9900.0</td>
+<td align="left">FALSE</td>
+<td align="left">ELLIS AVE S</td>
+<td align="right">2007</td>
+</tr>
+<tr class="even">
+<td align="left">9900.0</td>
+<td align="left">FALSE</td>
+<td align="left">15TH AVE NE</td>
+<td align="right">2008</td>
+</tr>
+<tr class="odd">
+<td align="left">9800.0</td>
+<td align="left">FALSE</td>
+<td align="left">S GENESEE ST</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">9500.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2007</td>
+</tr>
+<tr class="odd">
+<td align="left">8700.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2008</td>
+</tr>
+<tr class="even">
+<td align="left">9800.0</td>
+<td align="left">TRUE</td>
+<td align="left">COLUMBIA ST ON RP</td>
+<td align="right">2009</td>
+</tr>
+</tbody>
+</table>
+<p>This is a pretty clean way to write code that doesn’t force you to repeatedly assign temporary dataframes. The one real downside I see is that is that you’re more locked into dplyr verbs. If you’re working with people who are unfamiliar with dplyr, they might spend a bunch of time figuring out the difference between dplyr verbs and base R verbs, which could waste more time in more complex scripts.</p>
+<p>As a side note (even though this information is out of date) I might try to stay away from the Columbia Street on-ramp on weekdays…</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+output_dir: "."
+name: "Sean Williams"
+navbar:
+  title: "Home"
+  left:
+    - text: "About"
+      href: about.html
+    - text: "Posts"
+      menu:
+#      - text: "'So what's a good F1 score?'"
+      - text: "Logging Errors in R"
+        href: logging.html
+#      - text: "Using Qualaroo's REST API With Python"
+#      - text: "Reading Files in a Zipped Folder With R: Survey Monkey Edition"
+#      - text: "Spark & R"
+      - text: "Monty Hall Simulation"
+        href: montyhall.html 
+      - text: "Piping Code"
+        href: piping.html 
+      - text: "Reading Files Conditionally"
+        href: Reading.html 
+      - text: "Dumbell Plots"
+        href: dumbell.html 
+      - text: "Microbenchmarking Example"
+        href: Microbenchmarking.html
+#      - text: "Using Python in R Markdown"
+#      - text: "Loading data from SQL"
+#      - text: "Optimizely's API with R"
+
+  right:
+    - icon: ion-social-github
+      href: https://github.com/seanpwilliams
+    - icon: ion-person
+      href: https://www.linkedin.com/in/seanwilliams0
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate

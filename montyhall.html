@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Simulating the Monty Hall Problem</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Posts
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="logging.html">Logging Errors in R</a>
+    </li>
+    <li>
+      <a href="montyhall.html">Monty Hall Simulation</a>
+    </li>
+    <li>
+      <a href="piping.html">Piping Code</a>
+    </li>
+    <li>
+      <a href="Reading.html">Reading Files Conditionally</a>
+    </li>
+    <li>
+      <a href="dumbell.html">Dumbell Plots</a>
+    </li>
+    <li>
+      <a href="Microbenchmarking.html">Microbenchmarking Example</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/seanpwilliams">
+    <span class="ion ion-social-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/seanwilliams0">
+    <span class="ion ion-person"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Simulating the Monty Hall Problem</h1>
+
+</div>
+
+
+<p>My colleague has an affinity for the Monty Hall problem because it illustrates conditional probabilities. To illustrate the point to someone who did not believe that one should change doors, I simulated the two decisions. For background on the Monty Hall Problem, check out this Wikipedia article: <a href="https://en.wikipedia.org/wiki/Monty_Hall_problem" class="uri">https://en.wikipedia.org/wiki/Monty_Hall_problem</a></p>
+<pre class="r"><code>library(ggplot2)
+
+n &lt;- 10000
+stay_score &lt;- 0
+
+# guess the first door every time
+guess &lt;- 1
+result_1 &lt;- vector(&quot;numeric&quot;, length = n)
+prizes &lt;- c(&quot;car&quot;, &quot;goat&quot;, &quot;goat&quot;)
+
+for( i in 1:n) {
+  x &lt;- ifelse(sample(prizes)[guess]==&quot;car&quot;, 1, 0)
+  stay_score &lt;- stay_score+x
+  result_1[i] &lt;- stay_score/i
+}
+# print(tactic1/n)
+
+change_score &lt;- 0
+result_2 &lt;- vector(&quot;numeric&quot;, length = n)
+
+for( i in 1:n) {
+  guess &lt;- 1
+# guess the first door every time
+prizes &lt;- sample(c(&quot;car&quot;, &quot;goat&quot;, &quot;goat&quot;))
+
+#if the car is behind door number two, open door number three, otherwise open door number two
+
+ifelse(prizes[2] == &quot;car&quot;,prizes &lt;- prizes[-3], prizes &lt;- prizes[-2])
+guess &lt;- guess+1
+y &lt;- ifelse(prizes[guess]==&quot;car&quot;,1,0)
+change_score &lt;- change_score + y
+result_2[i] &lt;- change_score/i
+}
+ 
+ 
+df &lt;- as.data.frame(cbind(result_1, result_2))
+ 
+ 
+df$count &lt;- 1:nrow(df)</code></pre>
+<div id="the-stay-strategy-should-win-the-car-about-13-of-the-time" class="section level2">
+<h2>The Stay strategy should win the car about 1/3 of the time</h2>
+<p>Using the base plot function, you can quickly see how the average scores stabilize over each iteration.</p>
+<pre class="r"><code>plot(result_1, main = &quot;Stay Strategy Results&quot;,  xlab =&quot;Iteration Number&quot;, ylab = &quot;Average Success Rate&quot;)</code></pre>
+<p><img src="montyhall_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="the-change-strategy-should-win-about-23-of-the-time" class="section level2">
+<h2>The Change strategy should win about 2/3 of the time</h2>
+<pre class="r"><code>plot(result_2, main = &quot;Change Strategy Results&quot;,  xlab =&quot;Iteration Number&quot;, ylab = &quot;Average Success Rate&quot;)</code></pre>
+<p><img src="montyhall_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="how-long-does-it-take-for-the-average-to-converge-to-its-theoretical-value" class="section level2">
+<h2>How long does it take for the average to converge to its theoretical value?</h2>
+<p>By repeatedly simulating, we can see how long it will take for the average to reach 1/3 for the first strategy and 2/3 for the “change” strategy. The black lines indicate the theoretical value, and the blue dots darken by iteration. After 10,000 iterations, the average value for both strategies are pretty close to what they should theoretically reach.</p>
+<pre class="r"><code>ggplot(df, aes(x = result_1, y = result_2)) +geom_point(aes(color= -count)) +geom_vline(xintercept = 1/3) +geom_hline(yintercept = 2/3)</code></pre>
+<p><img src="montyhall_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
