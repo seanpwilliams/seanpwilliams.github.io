@@ -20,7 +20,7 @@ navbar:
         href: piping.html
       - text: "Logging Errors in R"
         href: logging.html
-#      - text: "Using Python in R Markdown"
+
 #      - text: "Loading data from SQL"
 #      - text: "Optimizely's API with R"
 #      - text: "Using Qualaroo's REST API With Python"
