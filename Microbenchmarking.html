@@ -187,13 +187,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="logging.html">Logging Errors in R</a>
-    </li>
-    <li>
       <a href="montyhall.html">Monty Hall Simulation</a>
-    </li>
-    <li>
-      <a href="piping.html">Piping Code</a>
     </li>
     <li>
       <a href="Reading.html">Reading Files Conditionally</a>
@@ -203,6 +197,12 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="Microbenchmarking.html">Microbenchmarking Example</a>
+    </li>
+    <li>
+      <a href="Piping.html">Piping R Code</a>
+    </li>
+    <li>
+      <a href="Logging.html">Logging Errors in R</a>
     </li>
   </ul>
 </li>
@@ -261,12 +261,12 @@ fib_2 &lt;- function(number){
 <p>Your gut can tell you that the first version will be faster, but it’s hard to quantify the difference without microbenchmarking.</p>
 <pre class="r"><code>microbenchmark(fib(100))</code></pre>
 <pre><code>## Unit: microseconds
-##      expr     min     lq     mean  median      uq     max neval
-##  fib(100) 106.168 123.08 143.1453 125.727 141.631 422.589   100</code></pre>
+##      expr     min      lq     mean median       uq     max neval
+##  fib(100) 105.077 118.771 131.4884 121.32 136.0625 246.707   100</code></pre>
 <pre class="r"><code>microbenchmark(fib_2(100))</code></pre>
 <pre><code>## Unit: microseconds
-##        expr     min      lq     mean  median      uq    max neval
-##  fib_2(100) 259.479 277.825 353.5896 302.152 412.302 900.48   100</code></pre>
+##        expr     min       lq     mean   median     uq     max neval
+##  fib_2(100) 251.361 275.2245 316.5572 303.5685 324.23 803.828   100</code></pre>
 <p>The mean (out of 100 iterations) time for the first version to complete the code is nearly half the time required for the second version (even though we’re talking about microseconds here). Divide the difference between the two versions by <strong>1,000,000</strong> to convert microseconds to seconds.</p>
 
 

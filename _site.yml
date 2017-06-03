@@ -7,7 +7,6 @@ navbar:
       href: about.html
     - text: "Posts"
       menu:
-#      - text: "'So what's a good F1 score?'"
       - text: "Monty Hall Simulation"
         href: montyhall.html 
       - text: "Reading Files Conditionally"
@@ -20,7 +19,7 @@ navbar:
         href: Piping.html
       - text: "Logging Errors in R"
         href: Logging.html
-
+#      - text: "'So what's a good F1 score?'"
 #      - text: "Loading data from SQL"
 #      - text: "Optimizely's API with R"
 #      - text: "Using Qualaroo's REST API With Python"
